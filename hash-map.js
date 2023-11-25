@@ -61,12 +61,20 @@ class HashMap {
   }
 
   entries() {
-    return this.#buckets.reduce((collection, bucket) => {
-      if (!bucket) return collection;
+    return this.#toArray(({ key, value }) => [key, value]);
+  }
 
-      bucket.each((entry) => collection.push(entry));
-      return collection;
-    }, [])
+  keys() {
+    return this.#toArray((entry) => entry.key);
+  }
+
+  #toArray(callback) {
+    return this.#buckets.reduce((array, bucket) => {
+      if (!bucket) return array;
+
+      bucket.each((entry) => array.push(callback(entry)));
+      return array;
+    }, []);
   }
 
   #hash(string) {
