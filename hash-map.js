@@ -25,10 +25,26 @@ class HashMap {
 
     if (entry) {
       entry.value = value;
-    } else {
-      this.#buckets[keyIndex].push(key, value);
-      this.length++;
+      return;
     }
+
+    if (this.#hasHighLoadFactor()) {
+      this.#growCapacity();
+      this.set(key, value);
+      return;
+    }
+
+    this.#buckets[keyIndex].push(key, value);
+    this.length++;
+  }
+
+  entries() {
+    return this.#buckets.reduce((collection, bucket) => {
+      if (!bucket) return collection;
+
+      bucket.each(({ key, value }) => collection.push([key, value]));
+      return collection;
+    }, [])
   }
 
   #hash(string) {
@@ -51,5 +67,20 @@ class HashMap {
 
   #capacity() {
     return this.#buckets.length;
+  }
+
+  #growCapacity() {
+    const currentEntries = this.entries();
+    this.#buckets = Array(this.#capacity() * 2);
+    currentEntries.forEach(([key, value]) => this.set(key, value));
+  }
+
+
+  #loadFactor() {
+    return this.length / this.#capacity();
+  }
+
+  #hasHighLoadFactor() {
+    return this.#loadFactor() > 0.75;
   }
 }

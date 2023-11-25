@@ -34,6 +34,14 @@ class LinkedList {
     }
     return null;
   }
+
+  each(callback) {
+    let pointer = this.#head;
+    while (pointer) {
+      callback(pointer.entry);
+      pointer = pointer.nextNode;
+    }
+  }
 }
 
 module.exports = LinkedList;
