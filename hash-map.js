@@ -10,6 +10,13 @@ class HashMap {
     this.length = 0;
   }
 
+  get(key) {
+    const keyIndex = this.#hashIndex(key);
+    const entry = this.#buckets[keyIndex]?.find(key);
+
+    return entry?.value;
+  }
+
   set(key, value) {
     const keyIndex = this.#hashIndex(key);
 

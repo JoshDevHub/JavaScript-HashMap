@@ -28,7 +28,7 @@ class LinkedList {
   find(key) {
     let pointer = this.#head;
     while(pointer) {
-      if (pointer.key === key) return pointer.entry;
+      if (pointer.entry.key === key) return pointer.entry;
 
       pointer = pointer.nextNode;
     }
