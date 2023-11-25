@@ -10,6 +10,20 @@ class HashMap {
     this.length = 0;
   }
 
+  set(key, value) {
+    const keyIndex = this.#hashIndex(key);
+
+    this.#buckets[keyIndex] ||= new LinkedList();
+    const entry = this.#buckets[keyIndex].find(key);
+
+    if (entry) {
+      entry.value = value;
+    } else {
+      this.#buckets[keyIndex].push(key, value);
+      this.length++;
+    }
+  }
+
   #hash(string) {
     const primeNumber = 31;
 

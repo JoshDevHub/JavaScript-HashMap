@@ -1,7 +1,6 @@
 class ListNode {
   constructor(key, value, next = null) {
-    this.key = key;
-    this.value = value;
+    this.entry = { key, value };
     this.next = next;
   }
 }
@@ -29,7 +28,7 @@ class LinkedList {
   find(key) {
     let pointer = this.#head;
     while(pointer) {
-      if (pointer.key === key) return pointer.value;
+      if (pointer.key === key) return pointer.entry;
 
       pointer = pointer.nextNode;
     }
