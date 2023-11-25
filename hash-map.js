@@ -50,9 +50,14 @@ class HashMap {
     const keyIndex = this.#hashIndex(key);
     const bucket = this.#buckets[keyIndex];
 
-    if (!bucket) return;
+    if (!bucket) return false;
 
-    return bucket.remove(key);
+    const deletedEntry = bucket.remove(key);
+    if (deletedEntry) {
+      this.length--;
+      return true;
+    }
+    return false;
   }
 
   clear() {
@@ -112,6 +117,7 @@ class HashMap {
   }
 
   #hasHighLoadFactor() {
-    return this.#loadFactor() > 0.75;
+    const maxLoadFactor = 0.75;
+    return this.#loadFactor() > maxLoadFactor;
   }
 }
