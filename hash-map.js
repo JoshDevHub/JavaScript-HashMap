@@ -65,14 +65,16 @@ class HashMap {
   }
 
   keys() {
-    return this.#toArray((entry) => entry.key);
+    return this.#toArray(({ key }) => key);
+  }
+
+  values() {
+    return this.#toArray(({ value }) => value);
   }
 
   #toArray(callback) {
     return this.#buckets.reduce((array, bucket) => {
-      if (!bucket) return array;
-
-      bucket.each((entry) => array.push(callback(entry)));
+      bucket?.each((entry) => array.push(callback(entry)));
       return array;
     }, []);
   }
