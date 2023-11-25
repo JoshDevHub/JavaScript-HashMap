@@ -108,8 +108,11 @@ class HashMap {
 
   #growCapacity() {
     const currentEntries = this.entries();
+    const currentLength = this.length;
+
     this.#buckets = Array(this.#capacity() * 2);
-    currentEntries.forEach(([key, value]) => this.set(key, value));
+    currentEntries.forEach((entry) => this.set(...entry));
+    this.length = currentLength;
   }
 
   #loadFactor() {
