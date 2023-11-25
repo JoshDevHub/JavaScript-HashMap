@@ -38,6 +38,14 @@ class HashMap {
     this.length++;
   }
 
+  has(key) {
+    const entry = this.get(key);
+    if (entry) {
+      return true;
+    }
+    return false;
+  }
+
   entries() {
     return this.#buckets.reduce((collection, bucket) => {
       if (!bucket) return collection;
