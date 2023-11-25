@@ -35,6 +35,25 @@ class LinkedList {
     return null;
   }
 
+  remove(key) {
+    if (this.#head.entry.key === key) {
+      const out = this.#head.entry.value;
+      this.#head = this.#head.nextNode;
+      return out;
+    }
+
+    let pointer = this.#head;
+
+    while (pointer.nextNode) {
+      const potentialTarget = pointer.nextNode;
+      if (potentialTarget.entry.key === key) {
+        pointer.nextNode = potentialTarget.nextNode;
+        return potentialTarget.entry.value;
+      }
+      pointer = pointer.nextNode;
+    }
+  }
+
   each(callback) {
     let pointer = this.#head;
     while (pointer) {

@@ -46,11 +46,20 @@ class HashMap {
     return false;
   }
 
+  remove(key) {
+    const keyIndex = this.#hashIndex(key);
+    const bucket = this.#buckets[keyIndex];
+
+    if (!bucket) return;
+
+    return bucket.remove(key);
+  }
+
   entries() {
     return this.#buckets.reduce((collection, bucket) => {
       if (!bucket) return collection;
 
-      bucket.each(({ key, value }) => collection.push([key, value]));
+      bucket.each((entry) => collection.push(entry));
       return collection;
     }, [])
   }
@@ -82,7 +91,6 @@ class HashMap {
     this.#buckets = Array(this.#capacity() * 2);
     currentEntries.forEach(([key, value]) => this.set(key, value));
   }
-
 
   #loadFactor() {
     return this.length / this.#capacity();
