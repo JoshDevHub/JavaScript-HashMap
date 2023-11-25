@@ -1,12 +1,12 @@
 const LinkedList = require('./linked-list');
 
+const INITIAL_CAPACITY = 10;
+
 class HashMap {
   #buckets;
 
   constructor() {
-    const initialCapacity = 10;
-
-    this.#buckets = Array(initialCapacity);
+    this.#buckets = Array(INITIAL_CAPACITY);
     this.length = 0;
   }
 
@@ -53,6 +53,11 @@ class HashMap {
     if (!bucket) return;
 
     return bucket.remove(key);
+  }
+
+  clear() {
+    this.#buckets = Array(INITIAL_CAPACITY);
+    this.length = 0;
   }
 
   entries() {
